@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Generators</title>
+</head>
+<body>
+    <script>
+        // function *listPeople() {
+        //     let i = 0
+        //     yield i
+        //     i++
+        //     yield i
+        //     i++
+        //     yield i
+        // }
+        // const list = listPeople()
+        // console.log((list.next().value))
+        // console.log((list.next().value))
+        // console.log((list.next().value))
+        // console.log((list.next()))
+        //最后一行)打印结果： Object {value: undefined, done: true}
+        //     done:
+        //     true
+        //     value:
+        //     undefined
+        // done表示迭代器是否完成
+
+        const inventors = [
+            {
+                first: 'Albert', last: 'Einstein', year: 1879
+            },
+            {
+                first: 'Isaac', last: 'Newton', year: 1643
+            },
+            {
+                first: 'Galileo', last: 'Galilei', year: 1564
+            },
+            {
+                first: 'Marie', last: 'Curie', year: 1867
+            },
+            {
+                first: 'Johannes', last: 'Kepler', year: 1571
+            }
+        ]
+        function *listInventors () {
+            for (inventor of inventors) {
+                yield inventor
+            }
+        }
+        const list = listInventors()
+        // if (list.next().done === false)
+        console.log(list.next().value)
+        console.log(list.next().value)
+        console.log(list.next().value)
+        // function ajax (url) {
+        //     // 只有一行代码默认就是返回值 json()也是一个promise
+        //     fetch(url).then(data=>data.json()).then(data=>{
+        //         dataGen.next(data)
+        //     })
+        // }
+        // // 生成器函数
+        // function *steps() {
+        //     // 这个函数不用来执行 而是生成迭代器
+        //     console.log('fetching beers')
+        //     const beers = yield ajax('http://api.react.beer/v2/search?q=hops&type=beer')
+        //     // yield ajax(douban)
+        //     console.log(beers)
+        //     console.log('fetching wes')
+        //     const wes = yield ajax('http://api.github.com/users/zzr716')
+        //     console.log(wes)
+        //     console.log('fetch fat joe')
+        //     const fatJoe = yield ajax('https://api.discogs.com/artists/51988')
+        //     console.log(fatJoe)
+        // }
+        // // 迭代器 iterator
+        // const dataGen = steps()
+        // dataGen.next()
+    </script>
+</body>
+</html>

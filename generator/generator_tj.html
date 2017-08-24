@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>generator+co框架</title>
+</head>
+<body>
+    <script>
+        function* gen() {
+            var h = yield Promise.resolve('hello')
+            console.log(h)
+            var w = yield Promise.resolve('world')
+            console.log(w)
+            var z = yield Promise.resolve('worlds')
+            console.log(z)
+            var o = yield Promise.resolve('hi')
+            console.log(o)
+        }
+        function co(gen) {
+            // 自动执行generator
+            // done true
+            var iter = gen()
+            // 方法一
+            // var p1 = iter.next()
+            // p1.value.then(function (res) {
+            //     var p2 = iter.next(res)
+            //     p2.value.then(function (res) {
+            //         var p3 = iter.next(res)
+            //         // console.log(p3.done)
+            //     })
+            // })
+            // 法二 递归
+            var ret = iter.next()
+            function next (ret) {
+                // ret的value应该是promise
+                ret.value.then(function (res) {
+                    ret = iter.next(res)
+                    if (ret.done === true) return
+                    next(ret)
+                })
+            }
+            next(ret)
+        }
+        co(gen)
+        // const iteratorGen = gen()
+        // // 第一个next用于启动
+        // console.log(iteratorGen.next('h'))
+        // // w
+        // console.log(iteratorGen.next('w'))
+        // // undefined
+        // console.log(iteratorGen.next())
+    </script>
+</body>
+</html>
